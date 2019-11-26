@@ -33,6 +33,8 @@ export default class App extends Component {
       newCanvas[i] = new Array(canvasWidth);
     }
 
+    this.setState({ canvas: newCanvas });
+    
     for (let i = 1; i < drawingRules.length; i++) {
       
       const [ command, ...drawArguments ] = drawingRules;
@@ -45,8 +47,6 @@ export default class App extends Component {
         this.bucketFill(...drawArguments);
       }
     }
-
-    this.setState({ canvas: newCanvas });
   }
 
   drawLine = (x, y, x1, y2) => {
@@ -58,7 +58,7 @@ export default class App extends Component {
   }
 
   bucketFill = (x, y, color) => {
-    
+
   }
 
   checkData = (dataFromFile) => {
