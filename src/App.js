@@ -25,7 +25,40 @@ export default class App extends Component {
   };
 
   drawCanvas = () => {
+    const { drawingRules } = this.state;
+    const { canvasWidth, canvasHeight } = this.state.canvasDimension;
 
+    let newCanvas = new Array(canvasHeight);
+    for (let i = 0; i < newCanvas.length; i++) {
+      newCanvas[i] = new Array(canvasWidth);
+    }
+
+    for (let i = 1; i < drawingRules.length; i++) {
+      
+      const [ command, ...drawArguments ] = drawingRules;
+      
+      if (command === COMMANDS.LINE) {
+        this.drawLine(...drawArguments);
+      } else if (command === COMMANDS.RECTANGLE) {
+        this.drawRectangle(...drawArguments);
+      } else if (command === COMMANDS.BUCKET_FILL) {
+        this.bucketFill(...drawArguments);
+      }
+    }
+
+    this.setState({ canvas: newCanvas });
+  }
+
+  drawLine = (x, y, x1, y2) => {
+
+  }
+
+  drawRectangle = (x, y, x1, y2) => {
+
+  }
+
+  bucketFill = (x, y, color) => {
+    
   }
 
   checkData = (dataFromFile) => {
