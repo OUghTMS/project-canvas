@@ -1,22 +1,16 @@
-.App {
-  text-align: center;
+.action-button {
+    color: #ffffff;
+    background: #3907c2;
+    outline: none;
 }
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+.file-input, .action-button {
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 10px;
+    padding: 6px 15px;
+    border-radius: 20px;
+} 
+.file-input input {
+    display: none;
 }

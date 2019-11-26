@@ -13,6 +13,9 @@ export default function FileLoadingButton(prop) {
     }
 
     return (
-        <input type="file" onChange={addFile}/>
+        <label className="file-input">
+            <input type="file" onChange={addFile} />
+            Upload File
+        </label>
     );
 }
