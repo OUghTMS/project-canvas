@@ -14,3 +14,11 @@
 .file-input input {
     display: none;
 }
+.errors-list {
+    margin: 10px 30px;
+}
+.error {
+    font-weight: bolder;
+    margin: 10px 0px;
+    color: rgb(185, 15, 15);
+}
