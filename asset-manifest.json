@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/project-canvas/static/css/main.c38cfb62.chunk.css",
-    "main.js": "/project-canvas/static/js/main.7dda3063.chunk.js",
-    "main.js.map": "/project-canvas/static/js/main.7dda3063.chunk.js.map",
+    "main.css": "/project-canvas/static/css/main.b8540c54.chunk.css",
+    "main.js": "/project-canvas/static/js/main.c8552e05.chunk.js",
+    "main.js.map": "/project-canvas/static/js/main.c8552e05.chunk.js.map",
     "runtime-main.js": "/project-canvas/static/js/runtime-main.bc516af6.js",
     "runtime-main.js.map": "/project-canvas/static/js/runtime-main.bc516af6.js.map",
-    "static/js/2.fe63ec76.chunk.js": "/project-canvas/static/js/2.fe63ec76.chunk.js",
-    "static/js/2.fe63ec76.chunk.js.map": "/project-canvas/static/js/2.fe63ec76.chunk.js.map",
+    "static/js/2.450bec1c.chunk.js": "/project-canvas/static/js/2.450bec1c.chunk.js",
+    "static/js/2.450bec1c.chunk.js.map": "/project-canvas/static/js/2.450bec1c.chunk.js.map",
     "index.html": "/project-canvas/index.html",
-    "precache-manifest.9be20b99173487696f37200e969dbb22.js": "/project-canvas/precache-manifest.9be20b99173487696f37200e969dbb22.js",
+    "precache-manifest.ab8ff53e68f38a8ef7ef5767d554b957.js": "/project-canvas/precache-manifest.ab8ff53e68f38a8ef7ef5767d554b957.js",
     "service-worker.js": "/project-canvas/service-worker.js",
-    "static/css/main.c38cfb62.chunk.css.map": "/project-canvas/static/css/main.c38cfb62.chunk.css.map"
+    "static/css/main.b8540c54.chunk.css.map": "/project-canvas/static/css/main.b8540c54.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.bc516af6.js",
-    "static/js/2.fe63ec76.chunk.js",
-    "static/css/main.c38cfb62.chunk.css",
-    "static/js/main.7dda3063.chunk.js"
+    "static/js/2.450bec1c.chunk.js",
+    "static/css/main.b8540c54.chunk.css",
+    "static/js/main.c8552e05.chunk.js"
   ]
 }
