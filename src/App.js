@@ -4,14 +4,10 @@ import './App.css';
 
 import FileLoadingButton from './components/File-loading-button';
 import Button from './components/Button';
+import ErrorMessages from './components/Error-messages';
 
-const COMMANDS = { CANVAS: 'C', LINE: 'L', RECTANGLE: 'R', BUCKET_FILL: 'B' };
-const ERRORS = { 
-  actionInNonExistentCanvas:'attempt to perform an action in a non-existent canvas',
-  invalidNumberOfArguments: 'invalid number of arguments',
-  invalidArguments: 'invalid arguments',
-  invalidFunction: 'invalid function'
-  };
+import { isValid } from './facilities/validation';
+import { COMMANDS, ERRORS } from './facilities/constants';
 
 export default class App extends Component {
   state = {
@@ -26,18 +22,18 @@ export default class App extends Component {
 
   drawCanvas = () => {
     const { drawingRules } = this.state;
-    const { canvasWidth, canvasHeight } = this.state.canvasDimension;
+    const { width, height } = this.state.canvasDimension;
 
-    let newCanvas = new Array(canvasHeight);
+    let newCanvas = new Array(height);
     for (let i = 0; i < newCanvas.length; i++) {
-      newCanvas[i] = new Array(canvasWidth);
+      newCanvas[i] = new Array(width);
     }
 
     this.setState({ canvas: newCanvas });
     
     for (let i = 1; i < drawingRules.length; i++) {
       
-      const [ command, ...drawArguments ] = drawingRules;
+      const [ command, ...drawArguments ] = drawingRules[i];
       
       if (command === COMMANDS.LINE) {
         this.drawLine(...drawArguments);
@@ -62,149 +58,54 @@ export default class App extends Component {
   }
 
   checkData = (dataFromFile) => {
-    this.setState({ errors: [], drawingRules: [] });
-
+    let errors = [];
     const arrayOfStrings = dataFromFile.split('\n');
-
     const [canvasRule, ...drawRules] = arrayOfStrings;
-        
     const canvasArguments = canvasRule.split(' ');
+
     if (canvasArguments[0] !== COMMANDS.CANVAS) {
 
-      const newError = {
-        id: ERRORS.actionInNonExistentCanvas,
+      errors = [...errors, {
+        id: ERRORS.noCanvasFound,
         rule: 1,
         meta: `${canvasArguments[0]} shoulde be equal to ${COMMANDS.CANVAS}`
-      };
-      this.setState({ errors: [ ...this.state.errors, newError] });
+      }];
 
-    } else if (canvasArguments.length !== 3) {
-      
-      const newError = {
-        id: ERRORS.invalidNumberOfArguments,
-        rule: 1,
-        meta: `${canvasArguments[0]} should have 2 arguments`
-      };
-      this.setState({ errors: [ ...this.state.errors, newError] });
-    
-    } else if (
-      isNaN(Number.parseInt(canvasArguments[1])) || 
-      isNaN(Number.parseInt(canvasArguments[2])) ||
-      Number.parseInt(canvasArguments[1]) < 1 ||
-      Number.parseInt(canvasArguments[2]) < 1 ) {
-      
-        const newError = {
-          id: ERRORS.invalidArguments,
-          rule: 1,
-          meta: `${canvasArguments[0]} arguments should have format [number number] (number > 0)`
-        };
-        this.setState({ errors: [ ...this.state.errors, newError] });
-    
     } else {
-
-      this.setState({ canvasDimension: {
-        width: Number.parseInt(canvasArguments[1]),
-        height: Number.parseInt(canvasArguments[2]),
-      }});
+      const { valid, width, height } = isValid(canvasArguments);
+      if (valid === 'valid') {
+        this.setState({ canvasDimension: {
+          width: width, 
+          height: height
+        } });
+      }
     }
 
-    drawRules.forEach( (string, index)  => {
-      const drawingArguments = string.split(' ');
-      
-      const { width, height } = this.state.canvasDimension;
-
-      if (drawingArguments[0] === COMMANDS.LINE || drawingArguments[0] === COMMANDS.RECTANGLE) {
+    if (errors.length === 0) {
+      drawRules.forEach( (string, index)  => {
+        const drawingArguments = string.split(' ');
         
-        if (drawingArguments.length !== 5) {
-
-          const newError = {
-            id: ERRORS.invalidNumberOfArguments,
-            rule: index + 2,
-            meta: `${drawingArguments[0]} should have 4 arguments`
-          };
-          this.setState({ errors: [ ...this.state.errors, newError] });
-          
-        } else if (            
-          isNaN(Number.parseInt(drawingArguments[1])) || 
-          isNaN(Number.parseInt(drawingArguments[2])) ||
-          isNaN(Number.parseInt(drawingArguments[3])) || 
-          isNaN(Number.parseInt(drawingArguments[4])) ||
-          
-          Number.parseInt(drawingArguments[1]) < 1 ||
-          Number.parseInt(drawingArguments[2]) < 1 ||
-          Number.parseInt(drawingArguments[3]) < 1 ||
-          Number.parseInt(drawingArguments[4]) < 1 ||
-
-          Number.parseInt(drawingArguments[1]) > width  ||
-          Number.parseInt(drawingArguments[2]) > height ||
-          Number.parseInt(drawingArguments[3]) > width  ||
-          Number.parseInt(drawingArguments[4]) > height ) {
-          
-            const newError = {
-              id: ERRORS.invalidArguments,
-              rule: index + 2,
-              meta: `${drawingArguments[0]} arguments should have format [x y x1 y1] (x, y, x1, y1 = number; 0 < x, x1 < ${width+1}; 0 < y, y1 < ${height+1})`
-            };
-            this.setState({ errors: [ ...this.state.errors, newError] });
+        if (drawingArguments[0] === COMMANDS.CANVAS) {
+          errors = [...errors, {
+            id: ERRORS.invalidFunction, 
+            rule: index+2,
+            meta: 'canvas is already initialized'
+          }];
+        } else {
+          const { width, height } = this.state.canvasDimension;
+          const validationMessage = isValid(drawingArguments, width, height);
         
-          } else if ( 
-          drawingArguments[0] === COMMANDS.LINE &&
-          drawingArguments[1] !== drawingArguments[3] && 
-          drawingArguments[2] !== drawingArguments[4] ) {
-
-            const newError = {
-              id: ERRORS.invalidArguments,
-              rule: index + 2,
-              meta: `${drawingArguments[0]} can not execute for diagonal lines`
-            };
-            this.setState({ errors: [ ...this.state.errors, newError] });
-          }
-      
-      } else if (drawingArguments[0] === COMMANDS.BUCKET_FILL) {
-        
-        if (drawingArguments.length !== 4) {
-        
-          const newError = {
-            id: ERRORS.invalidNumberOfArguments,
-            rule: index + 2,
-            meta: `${drawingArguments[0]} should have 3 arguments`
-          };
-          this.setState({ errors: [ ...this.state.errors, newError] });
-        
-        } else if (
-          isNaN(Number.parseInt(drawingArguments[1])) || 
-          isNaN(Number.parseInt(drawingArguments[2])) ||
-          
-          Number.parseInt(drawingArguments[1]) < 1 ||
-          Number.parseInt(drawingArguments[2]) < 1 ||
-
-          Number.parseInt(drawingArguments[1]) > width  ||
-          Number.parseInt(drawingArguments[2]) > height ||
-          
-          drawingArguments[3].length !== 1 ) {
-
-            const newError = {
-              id: ERRORS.invalidArguments,
-              rule: index + 2,
-              meta: `${drawingArguments[0]} arguments should have format [x y color] (x, y = number; 0 < x < ${width+1}; 0 < y < ${height+1}; color = singl symbol)`
-            };
-            this.setState({ errors: [ ...this.state.errors, newError] });
+          if (validationMessage !== 'valid') {
+            errors = [...errors, {...validationMessage, rule: index+2}];
+          }          
         }
+      });
+    }
 
-      } else {
-        
-        const newError = {
-          id: ERRORS.invalidFunction,
-          rule: index + 2,
-          meta: `${drawingArguments[0]} function does not exist`
-        };
-        this.setState({ errors: [ ...this.state.errors, newError] });
-
-      }
-    });
-
-    if (this.state.errors.length === 0) {
+    if (errors.length === 0) {
       this.setState({ drawingRules: drawRules.map( ruleArguments => ruleArguments.split(' ') ) });
+    } else {
+      this.setState({ errors: errors });
     }
   }
 
@@ -218,6 +119,7 @@ export default class App extends Component {
       <>
         <FileLoadingButton checkData={this.checkData} />
         <Button action={action} name="Create Canvas"/>
+        <ErrorMessages errors={this.state.errors} />
       </>
     );
   } 
