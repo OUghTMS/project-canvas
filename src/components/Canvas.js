@@ -27,13 +27,26 @@ export default class Canvas extends PureComponent {
             const [ command, ...drawArguments ] = rules[i];
             
             if (command === COMMANDS.LINE) {
-                this.drawLine(canvas, ...drawArguments);
+                const x = Number.parseInt(drawArguments[0]) - 1;
+                const y = Number.parseInt(drawArguments[1]) - 1;
+                const x1 = Number.parseInt(drawArguments[2]) - 1;
+                const y1 = Number.parseInt(drawArguments[3]) - 1;
+
+                this.drawLine(canvas, x, y, x1, y1);
 
             } else if (command === COMMANDS.RECTANGLE) {
-                this.drawRectangle(canvas, ...drawArguments);
+                const x = Number.parseInt(drawArguments[0]) - 1;
+                const y = Number.parseInt(drawArguments[1]) - 1;
+                const x1 = Number.parseInt(drawArguments[2]) - 1;
+                const y1 = Number.parseInt(drawArguments[3]) - 1;
+
+                this.drawRectangle(canvas, x, y, x1, y1);
 
             } else if (command === COMMANDS.BUCKET_FILL) {
-                this.bucketFill(canvas, ...drawArguments);
+                const x = Number.parseInt(drawArguments[0]) - 1;
+                const y = Number.parseInt(drawArguments[1]) - 1;
+
+                this.bucketFill(canvas, x, y, drawArguments[2]);
             }
         }
 
@@ -41,11 +54,6 @@ export default class Canvas extends PureComponent {
     }
 
     drawLine = (canvas, x, y, x1, y1) => {
-        x = Number.parseInt(x) - 1;
-        y = Number.parseInt(y) - 1;
-        x1 = Number.parseInt(x1) - 1;
-        y1 = Number.parseInt(y1) - 1;
-    
         if (x === x1) {
             let firstPoint = Math.min(y, y1);
             const secondPoint = Math.max(y, y1);
@@ -70,7 +78,40 @@ export default class Canvas extends PureComponent {
     }
 
     bucketFill = (canvas, x, y, color) => {
+        const initialColor = canvas[y][x];
+        canvas[y][x] = color;
 
+        if (y > 0) {
+
+            if (canvas[y-1][x] === initialColor) {
+    
+                this.bucketFill(canvas, x, y-1, color);
+            }   
+        }
+
+        if (y < canvas.length - 1) {
+
+            if (canvas[y+1][x] === initialColor) {
+    
+                this.bucketFill(canvas, x, y+1, color);
+            }   
+        }
+
+        if (x > 0) {
+
+            if (canvas[y][x-1] === initialColor) {
+    
+                this.bucketFill(canvas, x-1, y, color);
+            }        
+        }
+
+        if (x < canvas[0].length - 1) {
+
+            if (canvas[y][x+1] === initialColor) {
+    
+                this.bucketFill(canvas, x+1, y, color);
+            }
+        }
     }
 
     render() {
