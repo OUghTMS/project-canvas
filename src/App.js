@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import './App.css';
 
 import FileLoadingButton from './components/File-loading-button';
-import Button from './components/Button';
 import ErrorMessages from './components/Error-messages';
+import Canvas from './components/Canvas'
 
 import { isValid, VALID } from './facilities/validation';
 import { COMMANDS, ERRORS } from './facilities/constants';
@@ -13,49 +13,11 @@ export default class App extends Component {
   state = {
     drawingRules: [],
     errors: [],
-    canvas: [],
     canvasDimension: {
       width: null,
       height: null,
     },
   };
-
-  drawCanvas = () => {
-    const { drawingRules } = this.state;
-    const { width, height } = this.state.canvasDimension;
-
-    let newCanvas = new Array(height);
-    for (let i = 0; i < newCanvas.length; i++) {
-      newCanvas[i] = new Array(width);
-    }
-
-    this.setState({ canvas: newCanvas });
-    
-    for (let i = 1; i < drawingRules.length; i++) {
-      
-      const [ command, ...drawArguments ] = drawingRules[i];
-      
-      if (command === COMMANDS.LINE) {
-        this.drawLine(...drawArguments);
-      } else if (command === COMMANDS.RECTANGLE) {
-        this.drawRectangle(...drawArguments);
-      } else if (command === COMMANDS.BUCKET_FILL) {
-        this.bucketFill(...drawArguments);
-      }
-    }
-  }
-
-  drawLine = (x, y, x1, y2) => {
-
-  }
-
-  drawRectangle = (x, y, x1, y2) => {
-
-  }
-
-  bucketFill = (x, y, color) => {
-
-  }
 
   checkData = (dataFromFile) => {
     let errors = [];
@@ -108,19 +70,15 @@ export default class App extends Component {
       this.setState({ errors: errors });
     }
   }
-
-  showErrors = () => {
-    console.log(this.state.errors);
-  }
   
   render() {
-    const action = this.state.drawingRules.length ? this.drawCanvas : this.showErrors;
+    const { drawingRules, canvasDimension, errors } = this.state;
+    const canvas = drawingRules.length ? <Canvas rules={drawingRules} canvasDimension={canvasDimension}/> : <ErrorMessages errors={errors} />
     return (
-      <>
+      <div className="container">
         <FileLoadingButton checkData={this.checkData} />
-        <Button action={action} name="Create Canvas"/>
-        <ErrorMessages errors={this.state.errors} />
-      </>
+        {canvas}
+      </div>
     );
   } 
 }
