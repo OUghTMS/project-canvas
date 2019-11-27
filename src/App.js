@@ -6,7 +6,7 @@ import FileLoadingButton from './components/File-loading-button';
 import Button from './components/Button';
 import ErrorMessages from './components/Error-messages';
 
-import { isValid } from './facilities/validation';
+import { isValid, VALID } from './facilities/validation';
 import { COMMANDS, ERRORS } from './facilities/constants';
 
 export default class App extends Component {
@@ -73,7 +73,7 @@ export default class App extends Component {
 
     } else {
       const { valid, width, height } = isValid(canvasArguments);
-      if (valid === 'valid') {
+      if (valid === VALID) {
         this.setState({ canvasDimension: {
           width: width, 
           height: height
@@ -95,7 +95,7 @@ export default class App extends Component {
           const { width, height } = this.state.canvasDimension;
           const validationMessage = isValid(drawingArguments, width, height);
         
-          if (validationMessage !== 'valid') {
+          if (validationMessage !== VALID) {
             errors = [...errors, {...validationMessage, rule: index+2}];
           }          
         }

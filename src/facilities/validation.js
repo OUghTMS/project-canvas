@@ -1,21 +1,21 @@
 import { COMMANDS, ERRORS } from './constants';
 
-const valid = 'valid';
+export const VALID = 'valid';
 
 export function isValid (actionRules, width, height) {
     const [ command, ...commandArguments ] = actionRules;
     switch(command) {
         case COMMANDS.CANVAS:
-            return canvasArgumentsIsValide(commandArguments);
+            return canvasArgumentsIsValid(commandArguments);
 
         case COMMANDS.LINE:
-            return lineArgumentsIsValide(commandArguments, width, height);  
+            return lineArgumentsIsValid(commandArguments, width, height);  
         
         case COMMANDS.RECTANGLE:
-            return rectangleArgumentsIsValide(commandArguments, width, height);
+            return rectangleArgumentsIsValid(commandArguments, width, height);
 
         case COMMANDS.BUCKET_FILL:
-            return bucketFillArgumentsIsValide(commandArguments, width, height);
+            return bucketFillArgumentsIsValid(commandArguments, width, height);
 
         default:
             return commandDoesNotExist(command);
@@ -23,7 +23,7 @@ export function isValid (actionRules, width, height) {
 
 }
 
-function canvasArgumentsIsValide (commandArguments) {
+function canvasArgumentsIsValid (commandArguments) {
     if (commandArguments.length !== 2) {
 
         return {
@@ -45,14 +45,14 @@ function canvasArgumentsIsValide (commandArguments) {
     } else {
 
         return {
-            valid: valid,
+            valid: VALID,
             width: Number.parseInt(commandArguments[0]),
             height: Number.parseInt(commandArguments[1]),
         };
     }
 }
 
-function lineArgumentsIsValide (commandArguments, width, height) {
+function lineArgumentsIsValid (commandArguments, width, height) {
     if (commandArguments.length !== 4) {
 
         return {
@@ -76,11 +76,11 @@ function lineArgumentsIsValide (commandArguments, width, height) {
 
     } else {
 
-        return valid;
+        return VALID;
     }
 }
 
-function rectangleArgumentsIsValide (commandArguments, width, height) {
+function rectangleArgumentsIsValid (commandArguments, width, height) {
     if (commandArguments.length !== 4) {
 
         return {
@@ -97,11 +97,11 @@ function rectangleArgumentsIsValide (commandArguments, width, height) {
 
     } else {
 
-        return valid;
+        return VALID;
     }
 }
 
-function bucketFillArgumentsIsValide (commandArguments, width, height) {
+function bucketFillArgumentsIsValid (commandArguments, width, height) {
     if (commandArguments.length !== 3) {
         
         return {
@@ -118,7 +118,7 @@ function bucketFillArgumentsIsValide (commandArguments, width, height) {
 
     } else {
 
-        return valid;
+        return VALID;
     }
 }
 
@@ -159,5 +159,5 @@ function bucketFillFormatCondition (commandArguments, width, height) {
     Number.parseInt(commandArguments[0]) > width  ||
     Number.parseInt(commandArguments[1]) > height ||
     
-    commandArguments[2].length !== 1
+    commandArguments[2].length < 1
 }
