@@ -61,8 +61,12 @@ export default class Canvas extends PureComponent {
         }
     }
 
-    drawRectangle = (canvas, x, y, x1, y2) => {
-
+    drawRectangle = (canvas, x, y, x1, y1) => {
+        
+        this.drawLine(canvas, x, y, x1, y);
+        this.drawLine(canvas, x, y, x, y1);
+        this.drawLine(canvas, x1, y, x1, y1);
+        this.drawLine(canvas, x, y1, x1, y1);
     }
 
     bucketFill = (canvas, x, y, color) => {
@@ -70,7 +74,7 @@ export default class Canvas extends PureComponent {
     }
 
     render() {
-        const canvas = this.state.canvas.map( (row, rowIndex) => <div key={rowIndex}>
+        const canvas = this.state.canvas.map( (row, rowIndex) => <div key={rowIndex} className="row">
             {row.map( (cell, cellIndex) => <Cell key={`${rowIndex}-${cellIndex}`} cell={cell}/>)}
         </div> ) 
     return (
