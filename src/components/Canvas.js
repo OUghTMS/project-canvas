@@ -103,37 +103,42 @@ export default class Canvas extends PureComponent {
 
     bucketFill = (canvas, x, y, color) => {
         const initialColor = canvas[y][x];
-        canvas[y][x] = color;
+        let poinQueue = [ {x: x, y: y} ];
 
-        if (y > 0) {
+        while (poinQueue.length !== 0) {
+            const { x, y } = poinQueue.pop();
+            canvas[y][x] = color;
 
-            if (canvas[y-1][x] === initialColor) {
+            if (y > 0) {
     
-                this.bucketFill(canvas, x, y-1, color);
-            }   
-        }
+                if (canvas[y-1][x] === initialColor) {
+        
+                    poinQueue = [ {x: x, y: y-1}, ...poinQueue ];
+                }   
+            }
 
-        if (y < canvas.length - 1) {
-
-            if (canvas[y+1][x] === initialColor) {
+            if (y < canvas.length - 1) {
     
-                this.bucketFill(canvas, x, y+1, color);
-            }   
-        }
-
-        if (x > 0) {
-
-            if (canvas[y][x-1] === initialColor) {
+                if (canvas[y+1][x] === initialColor) {
+        
+                    poinQueue = [ {x: x, y: y+1}, ...poinQueue ];
+                }   
+            }
     
-                this.bucketFill(canvas, x-1, y, color);
-            }        
-        }
-
-        if (x < canvas[0].length - 1) {
-
-            if (canvas[y][x+1] === initialColor) {
+            if (x > 0) {
     
-                this.bucketFill(canvas, x+1, y, color);
+                if (canvas[y][x-1] === initialColor) {
+        
+                    poinQueue = [ {x: x-1, y: y}, ...poinQueue ];
+                }        
+            }
+    
+            if (x < canvas[0].length - 1) {
+    
+                if (canvas[y][x+1] === initialColor) {
+        
+                    poinQueue = [ {x: x+1, y: y}, ...poinQueue ];
+                }
             }
         }
     }
