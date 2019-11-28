@@ -67,7 +67,9 @@ function lineArgumentsIsValid (commandArguments, width, height) {
             meta: `L arguments should have format [x y x1 y1] (x, y, x1, y1 = number; 0 < x, x1 < ${width+1}; 0 < y, y1 < ${height+1})`
         };
 
-    } else if (commandArguments[0] !== commandArguments[2] && commandArguments[1] !== commandArguments[3]) {
+    } else if (
+        Number.parseInt(commandArguments[0]) !== Number.parseInt(commandArguments[2]) && 
+        Number.parseInt(commandArguments[1]) !== Number.parseInt(commandArguments[3])) {
 
         return {
             id: ERRORS.invalidArguments,
