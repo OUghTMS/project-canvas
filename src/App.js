@@ -44,8 +44,8 @@ export default class App extends Component {
     }
 
     if (errors.length === 0) {
-      drawRules.forEach( (string, index)  => {
-        const drawingArguments = string.split(' ');
+      drawRules.forEach( (rule, index)  => {
+        const drawingArguments = rule.trim().split(' ');
         
         if (drawingArguments[0] === COMMANDS.CANVAS) {
           errors = [...errors, {
