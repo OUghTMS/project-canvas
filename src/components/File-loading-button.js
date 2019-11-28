@@ -6,9 +6,12 @@ export default function FileLoadingButton(prop) {
         const file = event.target.files;
         const reader = new FileReader();
 
-        reader.readAsText(file[0]);
-        reader.onload = (event) => {
-            prop.checkData(event.target.result);
+        if(file.length === 1) {
+
+            reader.readAsText(file[0]);
+            reader.onload = (event) => {
+                prop.checkData(event.target.result);
+            } 
         } 
     }
 
