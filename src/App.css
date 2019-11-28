@@ -27,13 +27,6 @@
 }
 .cell {
     border: 1px solid #ccc;
-    color: cornsilk;
     width: 15px;
     height: 15px;
-}
-.blueviolet-cell {
-    background: blueviolet;
-}
-.green-cell {
-    background: green;
 }
