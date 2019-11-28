@@ -22,9 +22,8 @@ export default class Canvas extends PureComponent {
           }
         }
 
-        for (let i = 0; i < rules.length; i++) {
-      
-            const [ command, ...drawArguments ] = rules[i];
+        rules.forEach( rule => {
+            const [ command, ...drawArguments ] = rule;
             
             if (command === COMMANDS.LINE) {
                 const x = Number.parseInt(drawArguments[0]) - 1;
@@ -48,7 +47,7 @@ export default class Canvas extends PureComponent {
 
                 this.bucketFill(canvas, x, y, drawArguments[2]);
             }
-        }
+        })
 
         this.setState({ canvas: canvas})
     }
