@@ -26,13 +26,14 @@
     display: flex;
 }
 .cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 5px;
+    border: 1px solid #ccc;
     color: cornsilk;
-    background: blueviolet;
     width: 15px;
     height: 15px;
+}
+.blueviolet-cell {
+    background: blueviolet;
+}
+.green-cell {
+    background: green;
 }
