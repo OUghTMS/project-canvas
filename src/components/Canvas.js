@@ -10,6 +10,31 @@ export default class Canvas extends PureComponent {
     };
 
     componentDidMount() {
+        this.drawCanvas();
+    }
+    
+    componentDidUpdate(prevProps) {
+        const { width, height } = this.props.canvasDimension;
+        const rules = this.props.rules;
+        const { nextWidth, nextHeight } = prevProps.canvasDimension;
+        const nextRules = prevProps.rules;
+
+        if ( width !== nextWidth && height !== nextHeight ) {
+
+            if (nextRules.length !== rules.length) {
+
+                rules.forEach( (rule, index) => {
+                    if(rule !== nextRules[index]) {
+                        
+                        this.drawCanvas();
+                        return;
+                    }
+                });
+            }
+        }
+    }
+
+    drawCanvas = () => {
         const { width, height } = this.props.canvasDimension;
         const rules = this.props.rules;
 
@@ -49,7 +74,7 @@ export default class Canvas extends PureComponent {
             }
         })
 
-        this.setState({ canvas: canvas})
+        this.setState({ canvas: canvas});
     }
 
     drawLine = (canvas, x, y, x1, y1) => {

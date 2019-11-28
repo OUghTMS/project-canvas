@@ -67,7 +67,7 @@ export default class App extends Component {
     if (errors.length === 0) {
       this.setState({ drawingRules: drawRules.map( ruleArguments => ruleArguments.split(' ') ) });
     } else {
-      this.setState({ errors: errors });
+      this.setState({ errors: errors, drawingRules: [] });
     }
   }
   
