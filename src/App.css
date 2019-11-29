@@ -15,6 +15,7 @@
 }
 .errors-list, .canvas {
     margin: 20px 0px;
+    width: fit-content;
 }
 .error {
     font-weight: bolder;

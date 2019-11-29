@@ -7,6 +7,10 @@ export default function Cell(props) {
         const s = new Option().style;
         s.color = props.cell;
         
+        if (props.cell === ' ') {
+            return '#ffffff';
+        }
+
         if ( s.color !== '' ) {
 
             return props.cell;
