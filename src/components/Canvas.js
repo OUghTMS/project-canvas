@@ -30,17 +30,17 @@ export const drawRectangle = (canvas, x, y, x1, y1) => {
 
 export const bucketFill = (canvas, x, y, color) => {
     const initialColor = canvas[y][x];
-    let poinQueue = [ {x: x, y: y} ];
+    let pointsQueue = [ {x: x, y: y} ];
     
-    while (poinQueue.length !== 0) {
-        const { x, y } = poinQueue.pop();
+    while (pointsQueue.length !== 0) {
+        const { x, y } = pointsQueue.pop();
         canvas[y][x] = color;
         
         if (y > 0) {
             
             if (canvas[y-1][x] === initialColor) {
                 
-                poinQueue = [ {x: x, y: y-1}, ...poinQueue ];
+                pointsQueue.push({x: x, y: y-1});
             }   
         }
         
@@ -48,7 +48,7 @@ export const bucketFill = (canvas, x, y, color) => {
             
             if (canvas[y+1][x] === initialColor) {
                 
-                poinQueue = [ {x: x, y: y+1}, ...poinQueue ];
+                pointsQueue.push({x: x, y: y+1});
             }   
         }
         
@@ -56,7 +56,7 @@ export const bucketFill = (canvas, x, y, color) => {
             
             if (canvas[y][x-1] === initialColor) {
                 
-                poinQueue = [ {x: x-1, y: y}, ...poinQueue ];
+                pointsQueue.push({x: x-1, y: y});
             }        
         }
         
@@ -64,7 +64,7 @@ export const bucketFill = (canvas, x, y, color) => {
             
             if (canvas[y][x+1] === initialColor) {
                 
-                poinQueue = [ {x: x+1, y: y}, ...poinQueue ];
+                pointsQueue.push({x: x+1, y: y});
             }
         }
     }
