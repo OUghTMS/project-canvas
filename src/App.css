@@ -2,13 +2,12 @@
     padding: 30px;
 }
 .file-input {
-    border: 1px solid #ccc;
     cursor: pointer;
     font-size: 1em;
     padding: 6px 15px;
-    border-radius: 20px;
+    border-radius: 8px;
     color: #ffffff;
-    background: #3907c2;
+    background: #3418dd;
 } 
 .file-input input {
     display: none;

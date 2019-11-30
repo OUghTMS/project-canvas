@@ -70,23 +70,66 @@ export const bucketFill = (canvas, x, y, color) => {
     }
 }
 
+const drawCanvas = (props) => {
+    const { width, height } = props.canvasDimension;
+    const rules = props.rules;
+
+    let canvas = new Array(height);
+    for (let i = 0; i < canvas.length; i++) {
+      canvas[i] = new Array(width);
+
+      for (let j = 0; j < width; j++) {
+        canvas[i][j] = ' ';
+      }
+    }
+
+    rules.forEach( rule => {
+        const [ command, ...drawArguments ] = rule;
+        
+        if (command === COMMANDS.LINE) {
+            const x = Number.parseInt(drawArguments[0]) - 1;
+            const y = Number.parseInt(drawArguments[1]) - 1;
+            const x1 = Number.parseInt(drawArguments[2]) - 1;
+            const y1 = Number.parseInt(drawArguments[3]) - 1;
+
+            drawLine(canvas, x, y, x1, y1);
+
+        } else if (command === COMMANDS.RECTANGLE) {
+            const x = Number.parseInt(drawArguments[0]) - 1;
+            const y = Number.parseInt(drawArguments[1]) - 1;
+            const x1 = Number.parseInt(drawArguments[2]) - 1;
+            const y1 = Number.parseInt(drawArguments[3]) - 1;
+
+            drawRectangle(canvas, x, y, x1, y1);
+
+        } else if (command === COMMANDS.BUCKET_FILL) {
+            const x = Number.parseInt(drawArguments[0]) - 1;
+            const y = Number.parseInt(drawArguments[1]) - 1;
+
+            bucketFill(canvas, x, y, drawArguments[2]);
+        }
+    });
+
+    return canvas;
+}
+
 export default class Canvas extends Component {
     state = {
         canvas: [],
     };
 
+    static getDerivedStateFromProps(props) {
+    
+        return { canvas: drawCanvas(props) };
+    }
+
     componentDidMount() {
-        this.drawCanvas();
+        this.setState({ canvas: drawCanvas(this.props) });
     }
     
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.canvas.join('') !== this.state.canvas.join('')) {
-
-            return true;
-        }
-
+    shouldComponentUpdate(nextProps) {
         if (this.props.rules.join('') !== nextProps.rules.join('')) {
-        
+
             return true;
         }
 
@@ -94,50 +137,7 @@ export default class Canvas extends Component {
     }
 
     componentDidUpdate() {
-        this.drawCanvas();
-    }
-
-    drawCanvas = () => {
-        const { width, height } = this.props.canvasDimension;
-        const rules = this.props.rules;
-
-        let canvas = new Array(height);
-        for (let i = 0; i < canvas.length; i++) {
-          canvas[i] = new Array(width);
-
-          for (let j = 0; j < width; j++) {
-            canvas[i][j] = ' ';
-          }
-        }
-
-        rules.forEach( rule => {
-            const [ command, ...drawArguments ] = rule;
-            
-            if (command === COMMANDS.LINE) {
-                const x = Number.parseInt(drawArguments[0]) - 1;
-                const y = Number.parseInt(drawArguments[1]) - 1;
-                const x1 = Number.parseInt(drawArguments[2]) - 1;
-                const y1 = Number.parseInt(drawArguments[3]) - 1;
-
-                drawLine(canvas, x, y, x1, y1);
-
-            } else if (command === COMMANDS.RECTANGLE) {
-                const x = Number.parseInt(drawArguments[0]) - 1;
-                const y = Number.parseInt(drawArguments[1]) - 1;
-                const x1 = Number.parseInt(drawArguments[2]) - 1;
-                const y1 = Number.parseInt(drawArguments[3]) - 1;
-
-                drawRectangle(canvas, x, y, x1, y1);
-
-            } else if (command === COMMANDS.BUCKET_FILL) {
-                const x = Number.parseInt(drawArguments[0]) - 1;
-                const y = Number.parseInt(drawArguments[1]) - 1;
-
-                bucketFill(canvas, x, y, drawArguments[2]);
-            }
-        })
-
-        this.setState({ canvas: canvas});
+        this.setState({ canvas: drawCanvas(this.props) });
     }
     
     render() {
@@ -151,5 +151,3 @@ export default class Canvas extends Component {
         );
     } 
 }
-
-
