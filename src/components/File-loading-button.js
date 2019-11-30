@@ -7,7 +7,7 @@ export default function FileLoadingButton(prop) {
 
             const file = event.target.files;
             const reader = new FileReader();
-            console.log(file);
+            
             if(file.length === 1) {
                 
                 reader.readAsText(file[0]);

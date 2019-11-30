@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 
 import Cell from './Cell';
 
@@ -70,7 +70,7 @@ export const bucketFill = (canvas, x, y, color) => {
     }
 }
 
-export default class Canvas extends PureComponent {
+export default class Canvas extends Component {
     state = {
         canvas: [],
     };
@@ -79,25 +79,22 @@ export default class Canvas extends PureComponent {
         this.drawCanvas();
     }
     
-    componentDidUpdate(prevProps) {
-        const { width, height } = this.props.canvasDimension;
-        const rules = this.props.rules;
-        const { nextWidth, nextHeight } = prevProps.canvasDimension;
-        const nextRules = prevProps.rules;
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.canvas.join('') !== this.state.canvas.join('')) {
 
-        if ( width !== nextWidth && height !== nextHeight ) {
-
-            if (nextRules.length !== rules.length) {
-
-                rules.forEach( (rule, index) => {
-                    if(rule !== nextRules[index]) {
-                        
-                        this.drawCanvas();
-                        return;
-                    }
-                });
-            }
+            return true;
         }
+
+        if (this.props.rules.join('') !== nextProps.rules.join('')) {
+        
+            return true;
+        }
+
+        return false;
+    }
+
+    componentDidUpdate() {
+        this.drawCanvas();
     }
 
     drawCanvas = () => {
