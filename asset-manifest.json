@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/project-canvas/static/css/main.8f3be169.chunk.css",
-    "main.js": "/project-canvas/static/js/main.49f1d828.chunk.js",
-    "main.js.map": "/project-canvas/static/js/main.49f1d828.chunk.js.map",
+    "main.js": "/project-canvas/static/js/main.c0cb409b.chunk.js",
+    "main.js.map": "/project-canvas/static/js/main.c0cb409b.chunk.js.map",
     "runtime-main.js": "/project-canvas/static/js/runtime-main.bc516af6.js",
     "runtime-main.js.map": "/project-canvas/static/js/runtime-main.bc516af6.js.map",
     "static/js/2.054cdba4.chunk.js": "/project-canvas/static/js/2.054cdba4.chunk.js",
     "static/js/2.054cdba4.chunk.js.map": "/project-canvas/static/js/2.054cdba4.chunk.js.map",
     "index.html": "/project-canvas/index.html",
-    "precache-manifest.30c1ccb26f72bfe218247c0884af007a.js": "/project-canvas/precache-manifest.30c1ccb26f72bfe218247c0884af007a.js",
+    "precache-manifest.da56396ed010553e81d46a68c6174994.js": "/project-canvas/precache-manifest.da56396ed010553e81d46a68c6174994.js",
     "service-worker.js": "/project-canvas/service-worker.js",
     "static/css/main.8f3be169.chunk.css.map": "/project-canvas/static/css/main.8f3be169.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.bc516af6.js",
     "static/js/2.054cdba4.chunk.js",
     "static/css/main.8f3be169.chunk.css",
-    "static/js/main.49f1d828.chunk.js"
+    "static/js/main.c0cb409b.chunk.js"
   ]
 }
