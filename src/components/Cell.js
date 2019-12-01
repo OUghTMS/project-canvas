@@ -31,7 +31,7 @@ export default function Cell(props) {
     }
 
     return (
-        <div className="cell" style={{ background: cellBackground() }}>
+        <div className="cell" style={{ background: cellBackground(), width: props.dimension, height: props.dimension }}>
         </div>
     );
 }

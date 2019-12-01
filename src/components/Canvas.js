@@ -21,7 +21,7 @@ export const drawLine = (canvas, x, y, x1, y1) => {
 }
 
 export const drawRectangle = (canvas, x, y, x1, y1) => {
-        console.log(canvas);
+
     drawLine(canvas, x, y, x1, y);
     drawLine(canvas, x, y, x, y1);
     drawLine(canvas, x1, y, x1, y1);
@@ -125,12 +125,12 @@ export default class Canvas extends Component {
     
     shouldComponentUpdate(nextProps) {
 
-        return this.props.rules.join('') !== nextProps.rules.join('');
+        return this.props.rules.join('') !== nextProps.rules.join('') || this.props.cellDimension !== nextProps.cellDimension;
     }
     
     render() {
         const canvas = this.state.canvas.map( (row, rowIndex) => <div key={rowIndex} className="row">
-            {row.map( (cell, cellIndex) => <Cell key={`${rowIndex}-${cellIndex}`} cell={cell}/>)}
+            {row.map( (cell, cellIndex) => <Cell key={`${rowIndex}-${cellIndex}`} dimension={this.props.cellDimension} cell={cell}/>)}
         </div> ) 
         return (
             <div className="canvas">

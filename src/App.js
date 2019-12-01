@@ -13,6 +13,7 @@ export default class App extends Component {
   state = {
     drawingRules: [],
     errors: [],
+    cellDimension: 5,
     canvasDimension: {
       width: null,
       height: null,
@@ -72,12 +73,30 @@ export default class App extends Component {
     }
   }
   
+  changeCellDimension = (event) => {
+
+    if (event.target.value < 1) {
+      
+      this.setState({ cellDimension: 1 });
+    } else if(event.target.value > 50) {
+      
+      this.setState({ cellDimension: 50 });
+    } else {
+
+      this.setState({ cellDimension: Number.parseInt(event.target.value) });
+    }
+  }
+
   render() {
-    const { drawingRules, canvasDimension, errors } = this.state;
-    const canvas = drawingRules.length ? <Canvas rules={drawingRules} canvasDimension={canvasDimension}/> : <ErrorMessages errors={errors} />
+    const { drawingRules, canvasDimension, errors, cellDimension } = this.state;
+    const canvas = drawingRules.length ? <Canvas rules={drawingRules} canvasDimension={canvasDimension} cellDimension={cellDimension}/> : <ErrorMessages errors={errors} />
     return (
       <div className="container">
-        <FileLoadingButton checkData={this.checkData} />
+        <div className="input-container">
+          <FileLoadingButton checkData={this.checkData} />
+          <label className="dimension-label">Cell dimension:</label>
+          <input type="number" value={cellDimension} onChange={this.changeCellDimension} className="dimension-input"></input>
+        </div>
         {canvas}
       </div>
     );
