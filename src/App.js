@@ -39,7 +39,8 @@ export default class App extends Component {
         this.setState({ canvasDimension: {
           width: width, 
           height: height
-        } });
+        },
+        drawingRules: [] });
       }
     }
 

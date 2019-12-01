@@ -13,15 +13,15 @@ export const drawLine = (canvas, x, y, x1, y1) => {
         }
     } else {
         let firstPoint = Math.min(x, x1);
-        const secondPoint =Math.max(x, x1);
+        const secondPoint = Math.max(x, x1);
         for (; firstPoint <= secondPoint; firstPoint++) {
-        canvas[y][firstPoint] = 'x';
+            canvas[y][firstPoint] = 'x';
         }
     }
 }
 
 export const drawRectangle = (canvas, x, y, x1, y1) => {
-        
+        console.log(canvas);
     drawLine(canvas, x, y, x1, y);
     drawLine(canvas, x, y, x, y1);
     drawLine(canvas, x1, y, x1, y1);
@@ -122,18 +122,10 @@ export default class Canvas extends Component {
     
         return { canvas: drawCanvas(props) };
     }
-
-    componentDidMount() {
-        this.setState({ canvas: drawCanvas(this.props) });
-    }
     
     shouldComponentUpdate(nextProps) {
-        if (this.props.rules.join('') !== nextProps.rules.join('')) {
 
-            return true;
-        }
-
-        return false;
+        return this.props.rules.join('') !== nextProps.rules.join('');
     }
 
     componentDidUpdate() {
