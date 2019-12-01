@@ -127,10 +127,6 @@ export default class Canvas extends Component {
 
         return this.props.rules.join('') !== nextProps.rules.join('');
     }
-
-    componentDidUpdate() {
-        this.setState({ canvas: drawCanvas(this.props) });
-    }
     
     render() {
         const canvas = this.state.canvas.map( (row, rowIndex) => <div key={rowIndex} className="row">
