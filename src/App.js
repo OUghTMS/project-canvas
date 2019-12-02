@@ -5,6 +5,7 @@ import './App.css';
 import FileLoadingButton from './components/File-loading-button';
 import ErrorMessages from './components/Error-messages';
 import Canvas from './components/Canvas'
+import CellDimensionInput from './components/Cell-dimension-input'
 
 import { isValid, VALID } from './facilities/validation';
 import { COMMANDS, ERRORS } from './facilities/constants';
@@ -13,7 +14,7 @@ export default class App extends Component {
   state = {
     drawingRules: [],
     errors: [],
-    cellDimension: 5,
+    cellDimension: 15,
     canvasDimension: {
       width: null,
       height: null,
@@ -89,13 +90,13 @@ export default class App extends Component {
 
   render() {
     const { drawingRules, canvasDimension, errors, cellDimension } = this.state;
-    const canvas = drawingRules.length ? <Canvas rules={drawingRules} canvasDimension={canvasDimension} cellDimension={cellDimension}/> : <ErrorMessages errors={errors} />
+    const canvas = drawingRules.length ? <Canvas rules={drawingRules} canvasDimension={canvasDimension} cellDimension={cellDimension}/> : <ErrorMessages errors={errors} />;
+    const cellDimensionInput = Boolean(drawingRules.length) && <CellDimensionInput cellDimension={cellDimension} changeCellDimension={this.changeCellDimension} />;
     return (
       <div className="container">
         <div className="input-container">
           <FileLoadingButton checkData={this.checkData} />
-          <label className="dimension-label">Cell dimension:</label>
-          <input type="number" value={cellDimension} onChange={this.changeCellDimension} className="dimension-input"></input>
+          {cellDimensionInput}
         </div>
         {canvas}
       </div>
