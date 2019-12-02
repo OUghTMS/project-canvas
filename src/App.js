@@ -23,7 +23,8 @@ export default class App extends Component {
 
   checkData = (dataFromFile) => {
     let errors = [];
-    const arrayOfStrings = dataFromFile.split('\n');
+    let arrayOfStrings = dataFromFile.split('\n');
+    arrayOfStrings = arrayOfStrings.filter(ruleStrings => ruleStrings.replace(/^\s*$/g, ''));
     const [canvasRule, ...drawRules] = arrayOfStrings;
     const canvasArguments = canvasRule.split(' ');
 
