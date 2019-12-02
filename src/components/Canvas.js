@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import memoize from "memoize-one"
 
 import Cell from './Cell';
 
@@ -70,10 +71,9 @@ export const bucketFill = (canvas, x, y, color) => {
     }
 }
 
-const drawCanvas = (props) => {
-    const { width, height } = props.canvasDimension;
-    const rules = props.rules;
-
+const drawCanvas = memoize((rules, dimension) => {
+    const { width, height } = dimension;
+    
     let canvas = new Array(height);
     for (let i = 0; i < canvas.length; i++) {
       canvas[i] = new Array(width);
@@ -111,7 +111,7 @@ const drawCanvas = (props) => {
     });
 
     return canvas;
-}
+});
 
 export default class Canvas extends Component {
     state = {
@@ -120,7 +120,7 @@ export default class Canvas extends Component {
 
     static getDerivedStateFromProps(props) {
     
-        return { canvas: drawCanvas(props) };
+        return { canvas: drawCanvas(props.rules, props.canvasDimension) };
     }
     
     shouldComponentUpdate(nextProps) {
