@@ -33,8 +33,8 @@ B x y c<br>
 
 ### 💡Remarks:
 
--There is a folder (examples) in the repository with several valid input files for drawing.
--In case of an unknown command or invalid arguments for drawing, the application will display errors.
+- There is a folder (examples) in the repository with several valid input files for drawing.
+- In case of an unknown command or invalid arguments for drawing, the application will display errors.
 
 ## 👀Available Scripts
 
