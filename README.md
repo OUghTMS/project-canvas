@@ -1,6 +1,6 @@
 # Canvas 🎨
 
-The Canvas is simple drawing program lines and rectangle, with the ability to paint elements in various colors
+Canvas is a simple program for drawing lines and rectangles, with the ability to colorize elements in different colors.
 
 ## 👨‍💻Stack
 
@@ -17,7 +17,7 @@ The Canvas is simple drawing program lines and rectangle, with the ability to pa
 
 ## ✍️Description
 
-To start the application, you need to upload a file with data for drawing. Then the file will be checked and rendered on the specified canvas. It is important to remember that an application can only perform her familiar commands. 
+To start the application, you need to upload a file with data for drawing. Then the file will be checked and rendered on the specified canvas. It is important to remember that an application can only execute commands familiar to it.
 
 ### 📌Template for proper execution:
 
@@ -31,9 +31,10 @@ B x y c<br>
 - Rectangle (R): creates a rectangle with an angle at (x1, y1) and an opposite angle at (x2, y2). The vertical and horizontal lines are drawn with pseudographic “x” characters.
 - Bucket Fill (B): fills the entire area (x, y) with color ("color", c), similar to the way the "Fill" tool works in graphic editors.
 
-### 💡Remark: 
+### 💡Remarks:
 
-In case of an unknown command or invalid arguments for drawing, the application will display errors.
+-There is a folder (examples) in the repository with several valid input files for drawing.
+-In case of an unknown command or invalid arguments for drawing, the application will display errors.
 
 ## 👀Available Scripts
 
