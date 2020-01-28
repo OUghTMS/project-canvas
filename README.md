@@ -1,6 +1,7 @@
 # Canvas 🎨
 
 Canvas is a simple program for drawing lines and rectangles, with the ability to colorize elements in different colors.
+HTML Canvas usage was restricted by task rules.
 
 ## 👨‍💻Stack
 
